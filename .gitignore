@@ -1,0 +1,21 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Dynamic upload evidence (preserve folder, ignore dynamic uploads)
+uploads/*
+!uploads/.gitkeep
+!uploads/sample_placeholder.jpg
+!uploads/sample_wazirpur_smoke.jpg
+!uploads/sample_stubble_burn.jpg
+!uploads/sample_plastic_smoke.jpg

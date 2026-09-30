@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VayuDrishti | Federated Climate Action & Hyper-Local Air Resilience Platform</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div id="app-root">
+    
+    <!-- Top Navigation & Brand Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="brand-logo-badge">वायु</div>
+        <div class="brand-title-group">
+          <h1>Vayu<span class="highlight">Drishti</span></h1>
+          <div class="brand-subtitle">Federated Climate Action & Hyper-Local Resilience Grid</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" aria-label="Main Navigation">
+        <button class="nav-tab-btn active" data-tab="hotspots">
+          <span>🔥</span> Hotspots
+        </button>
+        <button class="nav-tab-btn" data-tab="corridors">
+          <span>🛣️</span> Corridors
+        </button>
+        <button class="nav-tab-btn" data-tab="federation">
+          <span>🌐</span> Federated Mesh
+        </button>
+        <button class="nav-tab-btn" data-tab="citizen">
+          <span>📸</span> Citizen Feeds
+        </button>
+        <button class="nav-tab-btn" data-tab="alerts">
+          <span>🚨</span> Rapid Interventions
+        </button>
+      </nav>
+
+      <!-- Header Status & Action -->
+      <div class="header-actions">
+        <div class="live-mesh-indicator">
+          <span class="live-pulse-dot"></span>
+          <span>5 States Federated</span>
+        </div>
+        <button class="btn btn-primary" id="open-citizen-report-btn">
+          <span>📷</span> Report Pollution
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Key Metrics Banner -->
+    <section class="stats-banner">
+      <div class="stat-item">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-details">
+          <span class="stat-value" id="stat-total-hotspots">6</span>
+          <span class="stat-label">Active Hyper-Local Hotspots</span>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">⚠️</div>
+        <div class="stat-details">
+          <span class="stat-value" id="stat-max-spike">412 µg/m³</span>
+          <span class="stat-label">Peak Particulate Spike</span>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">🌐</div>
+        <div class="stat-details">
+          <span class="stat-value" id="stat-state-nodes">5 States</span>
+          <span class="stat-label">Federated AI Edge Nodes</span>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">🛡️</div>
+        <div class="stat-details">
+          <span class="stat-value" id="stat-active-squads">2 Units</span>
+          <span class="stat-label">Flying Squads Deployed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Workspace: Split View (Map Canvas + Intelligence Sidebar) -->
+    <main class="main-workspace">
+      
+      <!-- Interactive Geospatial Canvas -->
+      <section class="map-canvas-container" aria-label="Interactive Climate Map">
+        <div id="leaflet-map"></div>
+
+        <!-- Floating Layer Controls -->
+        <div class="map-layer-controls">
+          <button class="layer-toggle-btn active" data-layer="hotspots">🔥 Hotspots</button>
+          <button class="layer-toggle-btn active" data-layer="sensors">📡 Micro-Sensors</button>
+          <button class="layer-toggle-btn active" data-layer="corridors">🛣️ Corridors</button>
+          <button class="layer-toggle-btn active" data-layer="satellite">🛰️ Satellite AOD</button>
+        </div>
+
+        <!-- CPCB NAQI Legend -->
+        <div class="map-legend-card">
+          <div class="legend-title">CPCB NAQI Index</div>
+          <div class="legend-scale">
+            <div class="legend-step">
+              <div class="legend-color-box" style="background: var(--aqi-good);"></div>
+              <span>0-50</span>
+            </div>
+            <div class="legend-step">
+              <div class="legend-color-box" style="background: var(--aqi-satisfactory);"></div>
+              <span>100</span>
+            </div>
+            <div class="legend-step">
+              <div class="legend-color-box" style="background: var(--aqi-moderate);"></div>
+              <span>200</span>
+            </div>
+            <div class="legend-step">
+              <div class="legend-color-box" style="background: var(--aqi-poor);"></div>
+              <span>300</span>
+            </div>
+            <div class="legend-step">
+              <div class="legend-color-box" style="background: var(--aqi-very-poor);"></div>
+              <span>400</span>
+            </div>
+            <div class="legend-step">
+              <div class="legend-color-box" style="background: var(--aqi-severe);"></div>
+              <span>500</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Telemetry & Control Sidebar -->
+      <aside class="telemetry-sidebar" aria-label="Telemetry & Intelligence Sidebar">
+        <div class="sidebar-header">
+          <h2 id="sidebar-active-title">🔥 Detected Hyper-Local Hotspots</h2>
+          <button class="btn btn-sm btn-secondary" onclick="window.app.loadAllData()" title="Refresh telemetry feeds">
+            🔄 Refresh
+          </button>
+        </div>
+
+        <div class="sidebar-content">
+          
+          <!-- Pane 1: Hotspots -->
+          <div id="tab-pane-hotspots" class="sidebar-tab-pane" style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Filter Pills -->
+            <div style="display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.2rem;">
+              <button class="btn btn-sm btn-secondary active" onclick="window.hotspotAnalytics.setFilter('all')">All</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.hotspotAnalytics.setFilter('critical')">Critical</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.hotspotAnalytics.setFilter('industrial')">Industrial</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.hotspotAnalytics.setFilter('agricultural')">Stubble Burn</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.hotspotAnalytics.setFilter('waste')">Waste Burn</button>
+            </div>
+            <!-- Hotspots List -->
+            <div id="hotspots-list-container" style="display: flex; flex-direction: column; gap: 0.85rem;"></div>
+          </div>
+
+          <!-- Pane 2: Corridors -->
+          <div id="tab-pane-corridors" class="sidebar-tab-pane" style="display: none;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-card); padding: 0.75rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-cyan);">
+              24-Hour Spatiotemporal Spike Forecasting powered by traffic volume, night boundary layer inversion, and regional biomass transport.
+            </div>
+            <div id="corridors-list-container" style="display: flex; flex-direction: column; gap: 1rem;"></div>
+          </div>
+
+          <!-- Pane 3: Federated Mesh -->
+          <div id="tab-pane-federation" class="sidebar-tab-pane" style="display: none;">
+            <div id="fed-global-stats"></div>
+            <button id="trigger-fed-sync-btn" class="btn btn-primary" style="width: 100%;">
+              🔄 Run Inter-State FedAvg Consensus Round
+            </button>
+            <div style="font-size: 0.75rem; color: var(--text-dim); text-align: center;">
+              Participating State Boards & Edge Clusters:
+            </div>
+            <div id="federation-nodes-container" style="display: flex; flex-direction: column; gap: 0.85rem;"></div>
+          </div>
+
+          <!-- Pane 4: Citizen Crowdsourced Feeds -->
+          <div id="tab-pane-citizen" class="sidebar-tab-pane" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Verified Citizen Observations</span>
+              <button class="btn btn-sm btn-primary" onclick="document.getElementById('citizen-modal').classList.add('active')">
+                + Submit Report
+              </button>
+            </div>
+            <div id="citizen-reports-container" style="display: flex; flex-direction: column; gap: 0.85rem;"></div>
+          </div>
+
+          <!-- Pane 5: Rapid Interventions & Authority Alerts -->
+          <div id="tab-pane-alerts" class="sidebar-tab-pane" style="display: none;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-card); padding: 0.75rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-red);">
+              Active statutory enforcement notices, flying squad mobilizations, and municipal anti-smog gun deployments.
+            </div>
+            <div id="alerts-list-container" style="display: flex; flex-direction: column; gap: 0.85rem;"></div>
+          </div>
+
+        </div>
+      </aside>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modal 1: Citizen Report Submission -->
+    <div id="citizen-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <h3>📷 Crowdsource Pollution Evidence</h3>
+          <button class="modal-close-btn" id="close-citizen-modal">&times;</button>
+        </div>
+        <form id="citizen-report-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label">Evidence Photo Upload</label>
+              <div class="upload-dropzone" id="citizen-upload-dropzone">
+                <div class="dropzone-icon">📸</div>
+                <div style="font-weight: 600; color: var(--accent-cyan);">Click or Drag & Drop Photo Here</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Supports JPG, PNG (AI Vision will analyze smoke opacity)</div>
+                <input type="file" id="citizen-photo-input" accept="image/*" style="display: none;">
+              </div>
+              <div class="photo-preview-box" id="photo-preview-container">
+                <img id="photo-preview-img" src="" alt="Evidence Preview">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Pollution Category</label>
+              <select id="report-category" class="form-select" required>
+                <option value="industrial_emission">Industrial Night-time Chimney / Smelting</option>
+                <option value="agricultural_burning">Paddy Crop Stubble Burning</option>
+                <option value="waste_burning">Open Garbage / Plastic Wire Pyrolysis</option>
+                <option value="construction_dust">Uncovered Road Dust / Construction</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Quick-Fill Hotspot Location</label>
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-sm btn-secondary" onclick="window.citizenReporting.quickFillLocation('Delhi', 'Delhi', 28.6975, 77.1640)">Wazirpur Industrial</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="window.citizenReporting.quickFillLocation('Sangrur', 'Punjab', 30.2435, 75.8390)">Sangrur Agri Belt</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="window.citizenReporting.quickFillLocation('Delhi', 'Delhi', 28.6845, 77.0305)">Mundka Outer</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="window.citizenReporting.quickFillLocation('Gurugram', 'Haryana', 28.5135, 76.9940)">Dwarka Expressway</button>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="form-group">
+                <label class="form-label">City</label>
+                <input type="text" id="report-city" class="form-input" value="Delhi" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">State</label>
+                <input type="text" id="report-state" class="form-input" value="Delhi" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="form-group">
+                <label class="form-label">Latitude</label>
+                <input type="number" step="0.0001" id="report-lat" class="form-input" value="28.6975" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Longitude</label>
+                <input type="number" step="0.0001" id="report-lng" class="form-input" value="77.1640" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Citizen Alias (Optional)</label>
+              <input type="text" id="report-alias" class="form-input" placeholder="e.g. Anand_Vihar_CleanAir">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Observation Details</label>
+              <textarea id="report-desc" class="form-textarea" placeholder="Describe smoke color, smell, chimney height, or ongoing activity..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('citizen-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="submit-report-btn">Submit Verified Report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 2: Hotspot Dossier & Inspection -->
+    <div id="inspection-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <h3 id="inspect-title">Hotspot Dossier</h3>
+          <button class="modal-close-btn" id="close-inspect-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+            <div style="background: var(--bg-card); padding: 0.75rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase;">Location</div>
+              <div id="inspect-location" style="font-weight: 700; color: var(--text-main); font-size: 0.85rem; margin-top: 2px;"></div>
+            </div>
+            <div style="background: var(--bg-card); padding: 0.75rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase;">Category</div>
+              <div id="inspect-category" style="font-weight: 700; color: var(--accent-cyan); font-size: 0.85rem; margin-top: 2px;"></div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+            <div style="background: var(--bg-card); padding: 0.75rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase;">AI Confidence Score</div>
+              <div id="inspect-confidence" style="font-weight: 700; color: #10b981; font-size: 1.1rem; margin-top: 2px;"></div>
+            </div>
+            <div style="background: var(--bg-card); padding: 0.75rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase;">Satellite AOD (Sentinel-5P)</div>
+              <div id="inspect-aod" style="font-weight: 700; color: #f59e0b; font-size: 1.1rem; margin-top: 2px;"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase;">Multi-Modal Synthesis Summary</div>
+            <p id="inspect-summary" style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.4; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: var(--radius-sm);"></p>
+          </div>
+
+          <div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase;">Statutory Action Directive</div>
+            <p id="inspect-action" style="font-size: 0.82rem; color: #fca5a5; line-height: 1.4; background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; padding: 0.75rem; border-radius: var(--radius-sm);"></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('inspection-modal').classList.remove('active')">Close</button>
+          <button type="button" class="btn btn-danger" id="inspect-dispatch-btn">🚨 Deploy Enforcement Squad</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3: Flying Squad Dispatch -->
+    <div id="dispatch-modal" class="modal-backdrop">
+      <div class="modal-window">
+        <div class="modal-header">
+          <h3>🚨 Dispatch Authority Flying Squad</h3>
+          <button class="modal-close-btn" id="close-dispatch-modal">&times;</button>
+        </div>
+        <form id="dispatch-squad-form">
+          <div class="modal-body">
+            <div style="margin-bottom: 1rem;">
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Hotspot Target</div>
+              <h4 id="dispatch-modal-hotspot-title" style="font-size: 0.95rem; color: var(--text-main); margin-top: 2px;"></h4>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Assigned Agency</div>
+              <div id="dispatch-modal-target" style="font-weight: 700; color: var(--accent-cyan); font-size: 0.88rem; margin-top: 2px;"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Intervention Directive & Field Orders</label>
+              <textarea id="dispatch-notes" class="form-textarea" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('dispatch-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-danger" id="confirm-dispatch-btn">Confirm Rapid Dispatch</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Application Modules -->
+  <script src="js/config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/hotspot-analytics.js"></script>
+  <script src="js/citizen-report.js"></script>
+  <script src="js/federated-mesh.js"></script>
+  <script src="js/alerts-manager.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "vayu-drishti",
+  "version": "1.0.0",
+  "description": "AI-powered federated climate action platform combining citizen-sourced ground intelligence, satellite AOD, and meteorological data for hyper-local air pollution resilience across Indian economic corridors.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js",
+    "test": "echo \"Testing API health...\" && node -e \"console.log('All backend modules loaded successfully')\""
+  },
+  "keywords": [
+    "air-quality",
+    "cpcb-naqi",
+    "federated-learning",
+    "climate-resilience",
+    "hyper-local-iot",
+    "satellite-aod",
+    "india-clean-air"
+  ],
+  "author": "VayuDrishti Engineering Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}

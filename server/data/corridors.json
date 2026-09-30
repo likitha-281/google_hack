@@ -1,0 +1,130 @@
+[
+  {
+    "id": "CORR-01",
+    "name": "Eastern Peripheral Expressway (EPE)",
+    "code": "NE-II",
+    "lengthKm": 135,
+    "description": "High-density freight bypass diverting non-destined commercial trucks around Delhi-NCR.",
+    "jurisdictions": ["Haryana", "Uttar Pradesh"],
+    "currentAvgAqi": 328,
+    "predictedSpikeAqi": 415,
+    "peakRiskWindow": "22:00 - 04:00 hrs",
+    "riskLevel": "severe",
+    "activeBottleneck": "Kundli-Baghpat Interchange",
+    "dailyTruckVolume": 48500,
+    "primaryPollutants": ["PM2.5", "NO2", "Elemental Carbon"],
+    "forecast": [
+      { "hour": "21:00", "aqi": 310, "risk": "poor" },
+      { "hour": "23:00", "aqi": 365, "risk": "very_poor" },
+      { "hour": "01:00", "aqi": 412, "risk": "severe" },
+      { "hour": "03:00", "aqi": 425, "risk": "severe" },
+      { "hour": "05:00", "aqi": 395, "risk": "very_poor" },
+      { "hour": "07:00", "aqi": 340, "risk": "very_poor" },
+      { "hour": "09:00", "aqi": 290, "risk": "poor" }
+    ],
+    "waypoints": [
+      [28.8785, 77.1265],
+      [28.9810, 77.2150],
+      [28.9100, 77.3800],
+      [28.6700, 77.4500],
+      [28.4500, 77.4700],
+      [28.1400, 77.3200]
+    ]
+  },
+  {
+    "id": "CORR-02",
+    "name": "Western Peripheral Expressway (WPE / KMP)",
+    "code": "KMP-EXP",
+    "lengthKm": 136,
+    "description": "Kundli-Manesar-Palwal expressway connecting key manufacturing hubs of North India.",
+    "jurisdictions": ["Haryana"],
+    "currentAvgAqi": 268,
+    "predictedSpikeAqi": 345,
+    "peakRiskWindow": "20:00 - 02:00 hrs",
+    "riskLevel": "very_poor",
+    "activeBottleneck": "Manesar Logistics Hub Exit",
+    "dailyTruckVolume": 41000,
+    "primaryPollutants": ["PM2.5", "PM10"],
+    "forecast": [
+      { "hour": "21:00", "aqi": 270, "risk": "poor" },
+      { "hour": "23:00", "aqi": 315, "risk": "very_poor" },
+      { "hour": "01:00", "aqi": 345, "risk": "very_poor" },
+      { "hour": "03:00", "aqi": 330, "risk": "very_poor" },
+      { "hour": "05:00", "aqi": 305, "risk": "poor" },
+      { "hour": "07:00", "aqi": 280, "risk": "poor" },
+      { "hour": "09:00", "aqi": 250, "risk": "moderate" }
+    ],
+    "waypoints": [
+      [28.8785, 77.1265],
+      [28.7500, 76.9200],
+      [28.5300, 76.8500],
+      [28.3548, 76.9381],
+      [28.2500, 77.0800],
+      [28.1400, 77.3200]
+    ]
+  },
+  {
+    "id": "CORR-03",
+    "name": "GT Road Agri-Industrial Belt (NH-44)",
+    "code": "NH-44-NORTH",
+    "lengthKm": 240,
+    "description": "Critical economic artery spanning Punjab, Haryana, and Delhi carrying agro-freight.",
+    "jurisdictions": ["Punjab", "Haryana", "Delhi"],
+    "currentAvgAqi": 340,
+    "predictedSpikeAqi": 460,
+    "peakRiskWindow": "17:00 - 23:00 hrs",
+    "riskLevel": "severe",
+    "activeBottleneck": "Karnal-Kurukshetra Stubble Plume Intersection",
+    "dailyTruckVolume": 62000,
+    "primaryPollutants": ["PM2.5", "CO", "Organic Carbon"],
+    "forecast": [
+      { "hour": "21:00", "aqi": 355, "risk": "very_poor" },
+      { "hour": "23:00", "aqi": 420, "risk": "severe" },
+      { "hour": "01:00", "aqi": 460, "risk": "severe" },
+      { "hour": "03:00", "aqi": 445, "risk": "severe" },
+      { "hour": "05:00", "aqi": 405, "risk": "severe" },
+      { "hour": "07:00", "aqi": 370, "risk": "very_poor" },
+      { "hour": "09:00", "aqi": 330, "risk": "very_poor" }
+    ],
+    "waypoints": [
+      [30.8797, 75.8943],
+      [30.3400, 76.3800],
+      [29.9600, 76.8700],
+      [29.6800, 76.9800],
+      [29.3909, 76.9635],
+      [28.8785, 77.1265],
+      [28.6469, 77.3160]
+    ]
+  },
+  {
+    "id": "CORR-04",
+    "name": "Mumbai-Pune Expressway Freight Spine",
+    "code": "MPE-48",
+    "lengthKm": 94,
+    "description": "Connecting India's largest container port (JNPT) with Pune automotive & IT manufacturing.",
+    "jurisdictions": ["Maharashtra"],
+    "currentAvgAqi": 162,
+    "predictedSpikeAqi": 220,
+    "peakRiskWindow": "08:00 - 11:00 & 18:00 - 21:00 hrs",
+    "riskLevel": "moderate",
+    "activeBottleneck": "Khandala Ghat Inversion Trap",
+    "dailyTruckVolume": 38000,
+    "primaryPollutants": ["NO2", "PM10"],
+    "forecast": [
+      { "hour": "21:00", "aqi": 165, "risk": "moderate" },
+      { "hour": "23:00", "aqi": 150, "risk": "moderate" },
+      { "hour": "01:00", "aqi": 140, "risk": "moderate" },
+      { "hour": "03:00", "aqi": 135, "risk": "moderate" },
+      { "hour": "05:00", "aqi": 155, "risk": "moderate" },
+      { "hour": "07:00", "aqi": 195, "risk": "moderate" },
+      { "hour": "09:00", "aqi": 215, "risk": "poor" }
+    ],
+    "waypoints": [
+      [19.0178, 72.8988],
+      [18.9800, 73.1200],
+      [18.7500, 73.3500],
+      [18.6500, 73.6500],
+      [18.5204, 73.8567]
+    ]
+  }
+]
